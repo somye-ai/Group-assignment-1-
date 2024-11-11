@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int rollNumber;
+    float grades[5];
+    float average;
+};
+
+void calculateAverage(struct Student *student) {
+    float sum = 0;
+    for (int i = 0; i < 5; i++) {
+        sum += student->grades[i];
+    }
+    student->average = sum / 5;
+}
+
+void printGradeCard(struct Student student) {
+    printf("\nGrade Card for %s (Roll Number: %d)\n", student.name, student.rollNumber);
+    printf("------------------------------------------------\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Subject %d: %.2f\n", i + 1, student.grades[i]);
+    }
+    printf("Average: %.2f\n", student.average);
+    printf("Grade: ");
+    
+    if (student.average >= 90) {
+        printf("A\n");
+    } else if (student.average >= 80) {
+        printf("B\n");
+    } else if (student.average >= 70) {
+        printf("C\n");
+    } else if (student.average >= 60) {
+        printf("D\n");
+    } else {
+        printf("F\n");
+    }
+    printf("------------------------------------------------\n");
+}
+
+int main() {
+    struct Student student;
+
+    printf("Enter student's name: ");
+    fgets(student.name, sizeof(student.name), stdin);
+    printf("Enter roll number: ");
+    scanf("%d", &student.rollNumber);
+    
+    printf("Enter grades for 5 subjects:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Subject %d: ", i + 1);
+        scanf("%f", &student.grades[i]);
+    }
+
+    calculateAverage(&student);
+    printGradeCard(student);
+
+    return 0;
+}
